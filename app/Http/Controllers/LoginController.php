@@ -9,8 +9,11 @@ use App\Models\Token;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
+
 use App\Helpers\DataFilter;
 use App\Helpers\Validations;
+
+use \Illuminate\Support\Facades\Validator;
 
 class LoginController extends Controller
 {
@@ -28,7 +31,6 @@ class LoginController extends Controller
                 "code" => 201,
             ]);
         }
-
         try {
             $user = Users::where('email', $req->email)->get();
             if (Hash::check($req->password, $user[0]->password)) {

@@ -25,4 +25,20 @@ Route::post('/login', 'LoginController@login');
 
 Route::post('/add-article', 'AddArticleController@addArticle');
 
+Route::post('/update-article', 'UpdateArticleController@update');
+
+Route::post('/delete-article', 'DeleteArticleController@delete');
+
+Route::post('/approve-article', 'ApproveArticleController@approve');
+
 Route::post('/read-more', 'ReadMoreController@getId');
+
+Route::post('/add-comment', 'CommentController@add');
+
+Route::post('/edit-comment', 'EditCommentController@edit');
+
+Route::post('/delete-comment', 'DeleteCommentController@delete');
+
+Route::post('/approve-comment', 'ApproveCommentController@approve');
+
+Route::post('/contact', 'ContactController@contact');

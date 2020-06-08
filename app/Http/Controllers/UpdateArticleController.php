@@ -3,24 +3,21 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
 use App\Models\Article;
 use App\Models\Category;
-use App\Models\Users;
 use App\Helpers\CategoryId;
 use App\Helpers\MultipleInsert;
 use App\Models\ArticleCategory;
 use Exception;
-use Illuminate\Support\Facades\Mail;
 
 use App\Helpers\DataFilter;
 use App\Helpers\Validations;
-use App\Mail\ArticleSubmitMail;
 
-class AddArticleController extends Controller
+class UpdateArticleController extends Controller
 {
-    public function addArticle(Request $req)
+    public function update(Request $req)
     {
-
         $data_filter = new DataFilter();
         $title = $data_filter->check_input($req->title);
         $content = $data_filter->check_input($req->content);
@@ -28,8 +25,13 @@ class AddArticleController extends Controller
         $selectedCategory = $data_filter->check_input($req->selectedCategory);
 
         $validate = new Validations();
-        $validation_error = $validate
-            ->add_article_validate($title, $content, $authorName, $selectedCategory, $req->file('image'));
+        if (isset($req->image)) {
+            $validation_error = $validate
+                ->update_article_validate($title, $content, $authorName, $selectedCategory, $req->file('image'));
+        } else {
+            $validation_error = $validate
+                ->update_article_validate($title, $content, $authorName, $selectedCategory);
+        }
         if ($validation_error !== "") {
             return response()->json([
                 "message" => $validation_error,
@@ -38,22 +40,21 @@ class AddArticleController extends Controller
         }
 
         try {
-            $article = new Article;
+            $article = Article::find($req->articleId);
             $article->title = $title;
             $article->content = $content;
             $article->author_name = $authorName;
-            if ($req->hasFile('image')) {
+
+            if (isset($req->image)) {
                 $file = $req->file('image');
                 $extension = $file->getClientOriginalExtension();
                 $fileName = time() . '.' . $extension;
                 $file->move('upload/images/', $fileName);
                 $article->image_name = $fileName;
             }
-            $article->is_approved = $req->isApproved;
-            if ($req->userId > 0) {
-                $article->user_id = $req->userId;
-            }
             $article->save();
+
+            $articleCategory = ArticleCategory::where('article_id', $req->articleId)->delete();
 
             $category_data = Category::select('id', 'category')->get();
             $get_category_id = new CategoryId();
@@ -62,17 +63,13 @@ class AddArticleController extends Controller
             $data = $multiple_insert->multiple_insert($category_id, $article->id);
             ArticleCategory::insert($data);
 
-            $admin = Users::select('email')->where('is_admin', 'Yes')->get();
-            $data = $req;
-            Mail::to($admin[0]->email)->send(new ArticleSubmitMail($data));
-
             return response()->json([
-                "message" => "Successfully added the article",
+                "message" => "Successfully updated the article",
                 "code" => 200,
             ]);
         } catch (Exception $e) {
             return response()->json([
-                "message" => "Error in submitting the article",
+                "message" => "Error in updating the article",
                 "code" => 201,
             ]);
         }
