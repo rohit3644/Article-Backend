@@ -14,8 +14,8 @@ class ArticleController extends Controller
 {
     public function index(Request $req)
     {
-        $articles =  Article::all();
-        $users = Users::all();
+        $articles =  Article::paginate();
+        $users = Users::paginate();
 
         foreach ($articles as $article) {
             $article->image_name = asset('/upload/images/' . $article->image_name);

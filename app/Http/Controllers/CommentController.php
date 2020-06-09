@@ -36,7 +36,7 @@ class CommentController extends Controller
             $commentUser = "";
             if ($req->userId > 0) {
                 $comments->user_id = $req->userId;
-                $commentUser = Users::find($req->userId);
+                $commentUser = Users::find($req->userId)->name;
             } else {
                 $commentUser = "Guest";
             }

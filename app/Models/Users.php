@@ -7,6 +7,7 @@ use App\Models\Article;
 
 class Users extends Model
 {
+    protected $perPage = 6;
     protected $table = 'users';
 
     public function articles()

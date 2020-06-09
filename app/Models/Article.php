@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Article extends Model
 {
+    protected $perPage = 6;
     protected $table = 'articles';
     public function user()
     {
