@@ -17,28 +17,39 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+
 Route::get('/article', 'ArticleController@index');
 
 Route::post('/register', 'RegistrationController@register');
 
 Route::post('/login', 'LoginController@login');
 
-Route::post('/add-article', 'AddArticleController@addArticle');
-
-Route::post('/update-article', 'UpdateArticleController@update');
+Route::post('/update-article', 'UpdateArticleController@update'); // both
 
 Route::post('/delete-article', 'DeleteArticleController@delete');
 
-Route::post('/approve-article', 'ApproveArticleController@approve');
+Route::post('/read-more', 'ReadMoreController@getId'); // both
 
-Route::post('/read-more', 'ReadMoreController@getId');
+Route::group(['middleware' => 'admin'], function () {
 
-Route::post('/add-comment', 'CommentController@add');
+    Route::post('/approve-article', 'ApproveArticleController@approve'); //admin
 
-Route::post('/edit-comment', 'EditCommentController@edit');
+    Route::post('/edit-comment', 'EditCommentController@edit'); // admin
 
-Route::post('/delete-comment', 'DeleteCommentController@delete');
+    Route::post('/delete-comment', 'DeleteCommentController@delete'); //admin
 
-Route::post('/approve-comment', 'ApproveCommentController@approve');
+    Route::post('/approve-comment', 'ApproveCommentController@approve'); //admin
 
-Route::post('/contact', 'ContactController@contact');
+});
+
+
+Route::group(['middleware' => 'user'], function () {
+
+
+    Route::post('/add-article', 'AddArticleController@addArticle'); // user
+
+    Route::post('/add-comment', 'CommentController@add'); // user
+
+    Route::post('/contact', 'ContactController@contact'); // user
+
+});

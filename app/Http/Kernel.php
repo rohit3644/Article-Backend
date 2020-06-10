@@ -42,7 +42,17 @@ class Kernel extends HttpKernel
         'api' => [
             'throttle:60,1',
             'bindings',
+
         ],
+
+        'admin' => [
+            \App\Http\Middleware\IsAdmin::class,
+        ],
+
+        'user' => [
+            \App\Http\Middleware\IsUser::class,
+        ],
+
     ];
 
     /**
