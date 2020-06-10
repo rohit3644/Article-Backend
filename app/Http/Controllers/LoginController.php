@@ -8,12 +8,9 @@ use Exception;
 use App\Models\Token;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
-
-
 use App\Helpers\DataFilter;
 use App\Helpers\Validations;
 
-use \Illuminate\Support\Facades\Validator;
 
 class LoginController extends Controller
 {
@@ -34,7 +31,9 @@ class LoginController extends Controller
         try {
             $user = Users::where('email', $req->email)->get();
             if (Hash::check($req->password, $user[0]->password)) {
-                $api_token =  Str::random(60);
+                $api_token = $user[0]->is_admin === "Yes"
+                    ? "78357" . Str::random(60) . strval($user[0]->id) :
+                    "14219" . Str::random(60) . strval($user[0]->id);
                 $token = new Token;
                 $token->api_token = Hash::make($api_token);
                 $token->user_id = $user[0]->id;

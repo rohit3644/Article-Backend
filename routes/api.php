@@ -30,6 +30,10 @@ Route::post('/delete-article', 'DeleteArticleController@delete');
 
 Route::post('/read-more', 'ReadMoreController@getId'); // both
 
+Route::post('/get-article', 'GetArticleController@get');
+
+Route::get('/all-articles', 'AllArticlesController@get');
+
 Route::group(['middleware' => 'admin'], function () {
 
     Route::post('/approve-article', 'ApproveArticleController@approve'); //admin
@@ -52,4 +56,5 @@ Route::group(['middleware' => 'user'], function () {
 
     Route::post('/contact', 'ContactController@contact'); // user
 
+    Route::post('/user-article', 'UserArticleController@index');
 });
