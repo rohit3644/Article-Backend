@@ -23,7 +23,7 @@ class AuthKey
             return $next($request);
         }
         return response()->json([
-            "message" => $request->header('authorization'),
+            "message" => "Access Denied",
             "code" => 401,
         ]);
     }

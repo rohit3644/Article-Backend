@@ -44,22 +44,6 @@ class Kernel extends HttpKernel
             'bindings',
         ],
 
-        // 'admin' => [
-        //     \App\Http\Middleware\IsAdmin::class,
-
-
-        // ],
-
-        // 'user' => [
-        //     \App\Http\Middleware\IsUser::class,
-
-
-        // ],
-
-        // 'authKey' => [
-        //     \App\Http\Middleware\AuthKey::class,
-        // ],
-
     ];
 
     /**
@@ -77,5 +61,7 @@ class Kernel extends HttpKernel
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'authKey' => \App\Http\Middleware\AuthKey::class,
+        'user' => \App\Http\Middleware\IsUser::class,
+        'admin' => \App\Http\Middleware\IsAdmin::class,
     ];
 }

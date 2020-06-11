@@ -12,7 +12,7 @@ class AuthToken
 
         $tokens = Token::select('api_token', 'user_id')->get();
         foreach ($tokens as $token) {
-            if (strcmp($reqToken, $token->api_token) === 0  && $token->user_id === $id) {
+            if (Hash::check($reqToken, $token->api_token) && $token->user_id === $id) {
                 return true;
             }
         }
