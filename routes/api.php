@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,9 +12,9 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
 
 Route::get('/article', 'ArticleController@index');
@@ -34,27 +33,24 @@ Route::post('/get-article', 'GetArticleController@get');
 
 Route::get('/all-articles', 'AllArticlesController@get');
 
-Route::group(['middleware' => 'admin'], function () {
+// Route::group(['middleware' => ['admin', 'authKey']], function () {
 
-    Route::post('/approve-article', 'ApproveArticleController@approve'); //admin
+Route::post('/approve-article', 'ApproveArticleController@approve');
 
-    Route::post('/edit-comment', 'EditCommentController@edit'); // admin
+Route::post('/edit-comment', 'EditCommentController@edit'); // admin
 
-    Route::post('/delete-comment', 'DeleteCommentController@delete'); //admin
+Route::post('/delete-comment', 'DeleteCommentController@delete'); //admin
 
-    Route::post('/approve-comment', 'ApproveCommentController@approve'); //admin
+Route::post('/approve-comment', 'ApproveCommentController@approve'); //admin
 
-});
+// });
 
+Route::post('/add-article', 'AddArticleController@addArticle'); // user
 
-Route::group(['middleware' => 'user'], function () {
+Route::post('/add-comment', 'CommentController@add');
 
+Route::post('/contact', 'ContactController@contact');
 
-    Route::post('/add-article', 'AddArticleController@addArticle'); // user
-
-    Route::post('/add-comment', 'CommentController@add'); // user
-
-    Route::post('/contact', 'ContactController@contact'); // user
-
-    Route::post('/user-article', 'UserArticleController@index');
-});
+// Route::group(['middleware' => ['user', 'authKey']], function () {
+Route::post('/user-article', 'UserArticleController@index')->middleware('authKey');
+// });

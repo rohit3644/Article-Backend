@@ -35,7 +35,7 @@ class LoginController extends Controller
                     ? "78357" . Str::random(60) . strval($user[0]->id) :
                     "14219" . Str::random(60) . strval($user[0]->id);
                 $token = new Token;
-                $token->api_token = Hash::make($api_token);
+                $token->api_token = $api_token;
                 $token->user_id = $user[0]->id;
                 $token->save();
                 return response()->json([

@@ -3,8 +3,9 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use App\Helpers\AuthToken;
 
-class IsUser
+class AuthKey
 {
     /**
      * Handle an incoming request.
@@ -15,14 +16,15 @@ class IsUser
      */
     public function handle($request, Closure $next)
     {
-        if ($request->isAdmin && $request->isAdmin === "No") {
-
+        $authToken = new AuthToken();
+        $token = $request->header('authorization');
+        $id = intval(substr($token, 65));
+        if ($authToken->isValid($token, $id)) {
             return $next($request);
         }
-
         return response()->json([
-            "message" => "Sorry, you don't have access to this functionality",
-            "code" => 201,
+            "message" => $request->header('authorization'),
+            "code" => 401,
         ]);
     }
 }
