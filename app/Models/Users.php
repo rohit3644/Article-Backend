@@ -14,4 +14,12 @@ class Users extends Model
     {
         return $this->hasMany(Article::class);
     }
+    public function setNameAttribute($value)
+    {
+        $this->attributes['name'] = htmlspecialchars(stripslashes(trim($value)));
+    }
+    public function setEmailAttribute($value)
+    {
+        $this->attributes['email'] = htmlspecialchars(stripslashes(trim($value)));
+    }
 }

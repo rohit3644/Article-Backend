@@ -2,37 +2,28 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Helpers\DataFilter;
-use App\Helpers\Validations;
+use App\Helpers\Response;
 use Exception;
 use App\Models\ArticleComment;
+use App\Http\Requests\EditCommentRequest;
+use Illuminate\Contracts\Logging\Log;
 
 class EditCommentController extends Controller
 {
-    public function edit(Request $req)
+    public function edit(EditCommentRequest $req)
     {
-        $data_filter = new DataFilter();
-        $newComment = $data_filter->check_input($req->newComment);
-
-        $validate = new Validations();
-        $validation_error = $validate
-            ->update_comment_validate($newComment);
-
-        if ($validation_error !== "") {
-            return response()->json([
-                "message" => $validation_error,
-                "code" => 201,
-            ]);
-        }
-
         try {
+            $response = new Response();
             $comment = ArticleComment::find($req->id);
-            $comment->comments = $newComment;
+            $comment->comments = $req->newComment;
             $comment->save();
-            return 1;
+            $msg = $response->response(200);
+            return response()->json($msg);
         } catch (Exception $e) {
-            return -1;
+            $msg = $response->response(500);
+            $log = new Log();
+            $log->error($msg["message"]);
+            return response()->json($msg);
         }
     }
 }

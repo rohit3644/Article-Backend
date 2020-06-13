@@ -2,33 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Helpers\Response;
 use App\Models\Users;
 use Exception;
 use App\Models\Token;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
-use App\Helpers\DataFilter;
-use App\Helpers\Validations;
-
+use App\Http\Requests\LoginRequest;
+use Illuminate\Contracts\Logging\Log;
 
 class LoginController extends Controller
 {
-    public function login(Request $req)
+    public function login(LoginRequest $req)
     {
-        $data_filter = new DataFilter();
-        $email = $data_filter->check_input($req->email);
-        $password = $data_filter->check_input($req->password);
-
-        $validate = new Validations();
-        $validation_error = $validate->login_validate($email, $password);
-        if ($validation_error !== "") {
-            return response()->json([
-                "message" => $validation_error,
-                "code" => 201,
-            ]);
-        }
         try {
+            $response = new Response();
             $user = Users::where('email', $req->email)->get();
             if (Hash::check($req->password, $user[0]->password)) {
                 $api_token = $user[0]->is_admin === "Yes"
@@ -38,27 +26,21 @@ class LoginController extends Controller
                 $token->api_token = Hash::make($api_token);
                 $token->user_id = $user[0]->id;
                 $token->save();
-                return response()->json([
+                $data = [
                     "api_key" => $api_token,
-                    "code" => 200,
                     "user" => $user[0],
-                ]);
+                ];
+                $msg = $response->response(200, $data);
+                return response()->json($msg);
             } else {
-                return response()->json(
-                    [
-                        "message" => "Invalid Username or password",
-                        "code" => 201,
-                    ]
-                );
+                $msg = $response->response(422);
+                return response()->json($msg);
             }
         } catch (Exception $e) {
-
-            return response()->json(
-                [
-                    "message" => "Invalid Request",
-                    "code" => 201,
-                ]
-            );
+            $msg = $response->response(500);
+            $log = new Log();
+            $log->error($msg["message"]);
+            return response()->json($msg);
         }
     }
 }

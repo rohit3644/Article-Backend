@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use App\Helpers\AuthToken;
+use App\Helpers\Response;
 
 class AuthKey
 {
@@ -16,15 +17,14 @@ class AuthKey
      */
     public function handle($request, Closure $next)
     {
+        $response = new Response();
         $authToken = new AuthToken();
         $token = $request->header('authorization');
         $id = intval(substr($token, 65));
         if ($authToken->isValid($token, $id)) {
             return $next($request);
         }
-        return response()->json([
-            "message" => "Access Denied",
-            "code" => 401,
-        ]);
+        $msg = $response->response(401);
+        return response()->json($msg);
     }
 }

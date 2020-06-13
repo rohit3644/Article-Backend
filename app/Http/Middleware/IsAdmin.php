@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Helpers\Response;
 use Closure;
 
 
@@ -16,16 +17,13 @@ class IsAdmin
      */
     public function handle($request, Closure $next)
     {
+        $response = new Response();
         if ($request->isAdmin && $request->isAdmin === "Yes") {
 
             return $next($request);
         }
 
-        return response()->json([
-            "message" => "Sorry, you don't have access to this functionality",
-            "code" => 201,
-        ]);
-
-        // return "You are verified";
+        $msg = $response->response(401);
+        return response()->json($msg);
     }
 }

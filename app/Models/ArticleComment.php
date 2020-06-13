@@ -11,4 +11,8 @@ class ArticleComment extends Model
     {
         return $this->belongsTo(Article::class);
     }
+    public function setCommentsAttribute($value)
+    {
+        $this->attributes['comments'] = htmlspecialchars(stripslashes(trim($value)));
+    }
 }

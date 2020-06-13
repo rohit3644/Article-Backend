@@ -2,14 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Response;
 use Illuminate\Http\Request;
 use App\Models\ArticleComment;
+use Exception;
+use Illuminate\Contracts\Logging\Log;
 
 class DeleteCommentController extends Controller
 {
     public function delete(Request $req)
     {
-        $comment = ArticleComment::find($req->id)->delete();
-        return;
+        try {
+            $response = new Response();
+            $comment = ArticleComment::find($req->id)->delete();
+            $msg = $response->response(200);
+            return response()->json($msg);
+        } catch (Exception $e) {
+            $msg = $response->response(500);
+            $log = new Log();
+            $log->error($msg["message"]);
+            return response()->json($msg);
+        }
     }
 }

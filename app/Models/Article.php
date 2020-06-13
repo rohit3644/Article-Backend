@@ -22,4 +22,16 @@ class Article extends Model
     {
         return $this->hasMany(ArticleComment::class);
     }
+    public function setTitleAttribute($value)
+    {
+        $this->attributes['title'] = htmlspecialchars(stripslashes(trim($value)));
+    }
+    public function setContentAttribute($value)
+    {
+        $this->attributes['content'] = htmlspecialchars(stripslashes(trim($value)));
+    }
+    public function setAuthorNameAttribute($value)
+    {
+        $this->attributes['author_name'] = htmlspecialchars(stripslashes(trim($value)));
+    }
 }

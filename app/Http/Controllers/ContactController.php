@@ -2,44 +2,36 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Response;
 use App\Mail\ContactFormMail;
-use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Mail;
-use App\Helpers\DataFilter;
-use App\Helpers\Validations;
-
+use App\Http\Requests\ContactRequest;
 use App\Models\Contact;
+use Exception;
+use Illuminate\Contracts\Logging\Log;
 
 class ContactController extends Controller
 {
-    public function contact(Request $req)
+    public function contact(ContactRequest $req)
     {
-        $data_filter = new DataFilter();
-        $email = $data_filter->check_input($req->email);
-        $name = $data_filter->check_input($req->name);
-        $message = $data_filter->check_input($req->message);
+        try {
+            $response = new Response();
+            $data = $req;
+            Mail::to('test@test.com')->send(new ContactFormMail($data));
 
-        $validate = new Validations();
-        $validation_error = $validate
-            ->contact_validate($email, $name, $message);
-        if ($validation_error !== "") {
-            return response()->json([
-                "message" => $validation_error,
-                "code" => 201,
-            ]);
+            $contact = new Contact;
+            $contact->name = $req->name;
+            $contact->email = $req->email;
+            $contact->message = $req->message;
+            $contact->save();
+            $msg = $response->response(200);
+            return response()->json($msg);
+        } catch (Exception $e) {
+            $msg = $response->response(500);
+            $log = new Log();
+            $log->error($msg["message"]);
+            return response()->json($msg);
         }
-        $data = $req;
-        Mail::to('test@test.com')->send(new ContactFormMail($data));
-
-        $contact = new Contact;
-        $contact->name = $name;
-        $contact->email = $email;
-        $contact->message = $message;
-        $contact->save();
-        return response()->json([
-            "message" => "We have successfully received your message",
-            "code" => 200,
-        ]);
     }
 }

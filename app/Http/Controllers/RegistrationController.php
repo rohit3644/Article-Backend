@@ -2,48 +2,33 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Helpers\Response;
 use App\Models\Users;
 use Exception;
 use Illuminate\Support\Facades\Hash;
-
-use App\Helpers\DataFilter;
-use App\Helpers\Validations;
+use App\Http\Requests\RegisterRequest;
+use Illuminate\Contracts\Logging\Log;
 
 class RegistrationController extends Controller
 {
-    public function register(Request $req)
+    public function register(RegisterRequest $req)
     {
-
-        $data_filter = new DataFilter();
-        $name = $data_filter->check_input($req->name);
-        $email = $data_filter->check_input($req->email);
-        $password = $data_filter->check_input($req->password);
-        $mobile = $data_filter->check_input($req->mobile);
-
-        $validate = new Validations();
-        $validation_error = $validate->register_validate($name, $email, $password, $mobile);
-        if ($validation_error !== "") {
-            return response()->json([
-                "message" => $validation_error,
-                "code" => 201,
-            ]);
-        }
-
-        $result = 0;
         try {
+            $response = new Response();
             $user = new Users;
-            $user->name = $name;
-            $user->email = $email;
-            $user->password = Hash::make($password);
-            $user->mobile_no = $mobile;
+            $user->name = $req->name;
+            $user->email = $req->email;
+            $user->password = Hash::make($req->password);
+            $user->mobile_no = $req->mobile;
             $user->is_admin = "No";
             $user->save();
-            $result = 1;
+            $msg = $response->response(200);
+            return response()->json($msg);
         } catch (Exception $e) {
-            $result = -1;
-        } finally {
-            return $result;
+            $msg = $response->response(200);
+            $log = new Log();
+            $log->error($msg["message"]);
+            return response()->json($msg);
         }
     }
 }
