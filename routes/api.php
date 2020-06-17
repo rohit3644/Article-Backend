@@ -1,6 +1,11 @@
 <?php
 
+
 Route::get('/article', 'ArticleController@index');
+
+Route::post('/otp-send', 'OTPSendController@send');
+
+Route::post('/otp-verify', 'OTPVerifyController@verify');
 
 Route::post('/register', 'RegistrationController@register');
 

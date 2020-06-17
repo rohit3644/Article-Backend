@@ -11,6 +11,8 @@ use Exception;
 use App\Helpers\Response;
 use App\Http\Requests\UpdateArticleRequest;
 use Illuminate\Contracts\Logging\Log;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 class UpdateArticleController extends Controller
 {
@@ -27,7 +29,7 @@ class UpdateArticleController extends Controller
                 $file = $req->file('image');
                 $extension = $file->getClientOriginalExtension();
                 $fileName = time() . '.' . $extension;
-                $file->move('upload/images/', $fileName);
+                Storage::disk('public')->put($fileName,  File::get($file));
                 $article->image_name = $fileName;
             }
             $article->save();

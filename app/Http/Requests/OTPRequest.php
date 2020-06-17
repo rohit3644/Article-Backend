@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AddArticleRequest extends FormRequest
+class OTPRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,11 +24,7 @@ class AddArticleRequest extends FormRequest
     public function rules()
     {
         return [
-            'image' => 'image|mimes:jpeg,jpg,png,gif|required|max:2500',
-            'title' => 'required',
-            'content' => 'required',
-            'authorName' => 'required',
-            'selectedCategory' => 'required',
+            "mobile" => "required",
         ];
     }
 }

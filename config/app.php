@@ -125,6 +125,11 @@ return [
 
     'log_level' => env('APP_LOG_LEVEL', 'debug'),
 
+    // 'twilio' => [
+    //     'TWILIO_AUTH_TOKEN'  => getenv('TWILIO_AUTH_TOKEN'),
+    //     'TWILIO_SID' => getenv('TWILIO_SID')
+    // ],
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers

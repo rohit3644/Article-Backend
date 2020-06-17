@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\ArticleSubmitMail;
 use App\Http\Requests\AddArticleRequest;
 use Illuminate\Contracts\Logging\Log;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 class AddArticleController extends Controller
 {
@@ -30,7 +32,7 @@ class AddArticleController extends Controller
                 $file = $req->file('image');
                 $extension = $file->getClientOriginalExtension();
                 $fileName = time() . '.' . $extension;
-                $file->move('upload/images/', $fileName);
+                Storage::disk('public')->put($fileName,  File::get($file));
                 $article->image_name = $fileName;
             }
             $article->is_approved = $req->isApproved;
