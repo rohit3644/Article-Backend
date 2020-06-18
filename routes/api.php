@@ -21,6 +21,9 @@ Route::post('/get-article', 'GetArticleController@get')->middleware("authKey");
 
 Route::get('/all-articles', 'AllArticlesController@get');
 
+Route::post('/payment', 'PaymentController@payment');
+
+
 // admin specific routes
 
 Route::post('/approve-article', 'ApproveArticleController@approve')->middleware("authKey", "admin");
