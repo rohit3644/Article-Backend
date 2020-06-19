@@ -7,6 +7,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
+// contact us mail to the team
 class ContactFormMail extends Mailable
 {
     use Queueable, SerializesModels;

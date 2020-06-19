@@ -8,7 +8,7 @@ use Exception;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\RegisterRequest;
 use Illuminate\Contracts\Logging\Log;
-
+// this class is used for registration
 class RegistrationController extends Controller
 {
     public function register(RegisterRequest $req)

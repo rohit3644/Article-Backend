@@ -8,6 +8,7 @@ use App\Models\Article;
 use Exception;
 use Illuminate\Contracts\Logging\Log;
 
+// this class is used to approve article
 class ApproveArticleController extends Controller
 {
     public function approve(Request $req)

@@ -7,7 +7,7 @@ use Exception;
 use App\Models\ArticleComment;
 use App\Http\Requests\EditCommentRequest;
 use Illuminate\Contracts\Logging\Log;
-
+// this class is used to edit comments
 class EditCommentController extends Controller
 {
     public function edit(EditCommentRequest $req)

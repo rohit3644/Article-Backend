@@ -11,7 +11,7 @@ use App\Mail\CommentSubmitMail;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\AddCommentRequest;
 use Illuminate\Contracts\Logging\Log;
-
+// this class is used to approve article
 class CommentController extends Controller
 {
     public function add(AddCommentRequest $req)
@@ -24,6 +24,7 @@ class CommentController extends Controller
             $comments->article_id = $req->articleId;
             $comments->is_approved = $req->isApproved;
             $commentUser = "";
+            // check if the user is guest or registered
             if ($req->userId > 0) {
                 $comments->user_id = $req->userId;
                 $commentUser = Users::find($req->userId)->name;
@@ -47,6 +48,7 @@ class CommentController extends Controller
                 "commentUser" => $commentUser,
                 "articleUser" => $req->articleUser,
             ];
+            // mail the author
             if (!is_null($req->articleMail)) {
                 Mail::to($req->articleMail)->send(new CommentSubmitMail($data));
             }
@@ -55,6 +57,7 @@ class CommentController extends Controller
             return response()->json($msg);
         } catch (Exception $e) {
             $msg = $response->response(500);
+            // log exception
             $log = new Log();
             $log->error($msg["message"]);
             return response()->json($msg);

@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use App\Http\Requests\LoginRequest;
 use Illuminate\Contracts\Logging\Log;
-
+// this class is used for login
 class LoginController extends Controller
 {
     public function login(LoginRequest $req)
@@ -19,6 +19,7 @@ class LoginController extends Controller
             $response = new Response();
             $user = Users::where('email', $req->email)->get();
             if (Hash::check($req->password, $user[0]->password)) {
+                // generating api token
                 $api_token = $user[0]->is_admin === "Yes"
                     ? "78357" . Str::random(60) . strval($user[0]->id) :
                     "14219" . Str::random(60) . strval($user[0]->id);

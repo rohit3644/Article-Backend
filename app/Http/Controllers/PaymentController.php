@@ -4,31 +4,33 @@ namespace App\Http\Controllers;
 
 use App\Helpers\Response;
 use Exception;
-use Illuminate\Http\Request;
-
+use App\Http\Requests\PaymentRequest;
+// this class is used for stripe payment
 class PaymentController extends Controller
 {
-    public function payment(Request $req)
+    public function payment(PaymentRequest $req)
     {
         try {
             $response = new Response();
             \Stripe\Stripe::setApiKey(getenv('STRIPE_SECRET_KEY'));
             $token = $req->tokenId;
+            // create customer
             $customer = \Stripe\Customer::create(array(
                 'name' => 'test',
                 'address' => [
-                    'line1' => '510 Townsend St',
-                    'postal_code' => '98140',
-                    'city' => 'San Francisco',
-                    'state' => 'CA',
-                    'country' => 'US',
+                    'line1' => $req->line,
+                    'postal_code' => $req->postalCode,
+                    'city' => $req->city,
+                    'state' => $req->state,
+                    'country' => $req->country,
                 ],
                 'source' => $token,
             ));
+            // create charge
             $charge = \Stripe\Charge::create([
                 'customer' => $customer->id,
-                'amount' => 60 * 100,
-                'currency' => 'usd',
+                'amount' => 450 * 100,
+                'currency' => 'inr',
                 'description' => 'Monthly Charge',
             ]);
             $msg = $response->response(200);

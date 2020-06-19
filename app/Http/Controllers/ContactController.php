@@ -10,12 +10,13 @@ use App\Http\Requests\ContactRequest;
 use App\Models\Contact;
 use Exception;
 use Illuminate\Contracts\Logging\Log;
-
+// this class is used for contact us form
 class ContactController extends Controller
 {
     public function contact(ContactRequest $req)
     {
         try {
+            // mail the team
             $response = new Response();
             $data = $req;
             Mail::to('test@test.com')->send(new ContactFormMail($data));

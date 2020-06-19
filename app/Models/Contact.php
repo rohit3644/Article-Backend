@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+// contacts table with the mutators
 class Contact extends Model
 {
     public function setNameAttribute($value)

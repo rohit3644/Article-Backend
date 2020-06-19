@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
+// article_comment table model with all relationship and mutators
 class ArticleComment extends Model
 {
     protected $table = 'article_comment';

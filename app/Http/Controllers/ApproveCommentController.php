@@ -8,6 +8,7 @@ use App\Models\ArticleComment;
 use Exception;
 use Illuminate\Contracts\Logging\Log;
 
+// this class is used to approve comments
 class ApproveCommentController extends Controller
 {
     public function approve(Request $req)

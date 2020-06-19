@@ -8,7 +8,7 @@ use App\Models\Article;
 use Exception;
 use Illuminate\Support\Facades\File;
 use Illuminate\Contracts\Logging\Log;
-
+// this class is used to delete articles
 class DeleteArticleController extends Controller
 {
     public function delete(Request $req)
@@ -16,6 +16,7 @@ class DeleteArticleController extends Controller
         try {
             $response = new Response();
             $article = Article::find($req->id);
+            // delete the respective image file also
             File::delete('upload/images/' . $article->image_name);
             $article = Article::find($req->id)->delete();
             $msg = $response->response(200);

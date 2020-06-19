@@ -8,7 +8,7 @@ use App\Models\Article;
 use App\Models\Users;
 use Exception;
 use Illuminate\Contracts\Logging\Log;
-
+// this class is used to get specific article
 class GetArticleController extends Controller
 {
     public function get(Request $req)

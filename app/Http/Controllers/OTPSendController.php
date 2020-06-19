@@ -6,7 +6,7 @@ use App\Helpers\Response;
 use App\Http\Requests\OTPRequest;
 use Exception;
 use Twilio\Rest\Client;
-
+// this class is used to send otp using twilio
 class OTPSendController extends Controller
 {
     public function send(OTPRequest $req)

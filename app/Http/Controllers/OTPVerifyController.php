@@ -6,7 +6,7 @@ use App\Helpers\Response;
 use Exception;
 use Twilio\Rest\Client;
 use App\Http\Requests\OTPVerifyRequest;
-
+// this class is used to verify otp using twilio
 class OTPVerifyController extends Controller
 {
     public function verify(OTPVerifyRequest $req)

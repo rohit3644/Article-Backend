@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use App\Helpers\Response;
 use Closure;
 
+// restricting access to users only
 class IsUser
 {
     /**

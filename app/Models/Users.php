@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Article;
-
+// users table model with all relationship and mutators
 class Users extends Model
 {
     protected $perPage = 6;

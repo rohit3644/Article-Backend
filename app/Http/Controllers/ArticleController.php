@@ -9,6 +9,7 @@ use App\Models\Users;
 use Exception;
 use Illuminate\Contracts\Logging\Log;
 
+// this class is used to show paginated article data to frontend
 class ArticleController extends Controller
 {
     public function index(Request $req)

@@ -14,6 +14,7 @@ use Illuminate\Contracts\Logging\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 
+// this class is used to update an article
 class UpdateArticleController extends Controller
 {
     public function update(UpdateArticleRequest $req)
@@ -34,6 +35,7 @@ class UpdateArticleController extends Controller
             }
             $article->save();
 
+            // delete the exisiting categories and insert new categories
             $articleCategory = ArticleCategory::where('article_id', $req->articleId)->delete();
 
             $category_data = Category::select('id', 'category')->get();

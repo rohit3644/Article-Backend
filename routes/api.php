@@ -1,27 +1,46 @@
 <?php
 
-
+// get article
 Route::get('/article', 'ArticleController@index');
 
+// send otp
 Route::post('/otp-send', 'OTPSendController@send');
 
+// verify otp
 Route::post('/otp-verify', 'OTPVerifyController@verify');
 
+// registration
 Route::post('/register', 'RegistrationController@register');
 
+// login
 Route::post('/login', 'LoginController@login');
 
+// update article
 Route::post('/update-article', 'UpdateArticleController@update')->middleware("authKey");
 
+// delete article
 Route::post('/delete-article', 'DeleteArticleController@delete')->middleware("authKey");
 
+// readmore article
 Route::post('/read-more', 'ReadMoreController@getId');
 
+// get the article data to prepopulate update field
 Route::post('/get-article', 'GetArticleController@get')->middleware("authKey");
 
+// all articles for admin screen
 Route::get('/all-articles', 'AllArticlesController@get');
 
+// stripe payment
 Route::post('/payment', 'PaymentController@payment');
+
+// add article
+Route::post('/add-article', 'AddArticleController@addArticle');
+
+// add comments
+Route::post('/add-comment', 'CommentController@add');
+
+// contact us
+Route::post('/contact', 'ContactController@contact');
 
 
 // admin specific routes
@@ -35,11 +54,5 @@ Route::post('/delete-comment', 'DeleteCommentController@delete')->middleware("au
 Route::post('/approve-comment', 'ApproveCommentController@approve')->middleware("authKey", "admin");
 
 // user specific routes
-
-Route::post('/add-article', 'AddArticleController@addArticle');
-
-Route::post('/add-comment', 'CommentController@add');
-
-Route::post('/contact', 'ContactController@contact');
 
 Route::post('/user-article', 'UserArticleController@index')->middleware("authKey", "user");

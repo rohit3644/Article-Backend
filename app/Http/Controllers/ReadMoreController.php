@@ -8,7 +8,7 @@ use App\Models\Article;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Logging\Log;
-
+// this class is used for article details
 class ReadMoreController extends Controller
 {
     public function getId(Request $req)
@@ -17,6 +17,7 @@ class ReadMoreController extends Controller
             $response = new Response();
             $data = Article::select('id', 'title')->get();
             $id = -1;
+            // get the id of matching article
             foreach ($data as $article) {
                 if (strtolower($article->title) === $req->article) {
                     $id = $article->id;

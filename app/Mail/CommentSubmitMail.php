@@ -6,7 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
-
+// Mail author on article comment submit
 class CommentSubmitMail extends Mailable
 {
     use Queueable, SerializesModels;

@@ -5,8 +5,8 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
+// Mail admin on article submit
 class ArticleSubmitMail extends Mailable
 {
     use Queueable, SerializesModels;

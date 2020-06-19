@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\ArticleComment;
 use Exception;
 use Illuminate\Contracts\Logging\Log;
-
+// this class is used to delete the comments
 class DeleteCommentController extends Controller
 {
     public function delete(Request $req)

@@ -9,6 +9,7 @@ use App\Models\Users;
 use Exception;
 use Illuminate\Contracts\Logging\Log;
 
+// this class is used to get all the articles
 class AllArticlesController extends Controller
 {
     public function get(Request $req)
@@ -17,6 +18,7 @@ class AllArticlesController extends Controller
             $response = new Response();
             $articles =  Article::all();
             foreach ($articles as $article) {
+                // link of the image
                 $article->image_name = asset('/upload/images/' . $article->image_name);
                 $article['category'] = $article->category;
                 $article['comments'] = $article->comments;
@@ -24,6 +26,7 @@ class AllArticlesController extends Controller
             }
             foreach ($articles as $article) {
                 foreach ($article->comments as $comments) {
+                    // check is user is guest or a registered user
                     if (is_null($comments->user_id)) {
                         $comments["user"] = "Guest";
                     } else {
@@ -36,6 +39,7 @@ class AllArticlesController extends Controller
             return response()->json($msg);
         } catch (Exception $e) {
             $msg = $response->response(500, $articles);
+            // logging exception
             $log = new Log();
             $log->error($msg["message"]);
             return response()->json($msg);

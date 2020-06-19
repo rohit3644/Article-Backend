@@ -6,6 +6,7 @@ use Closure;
 use App\Helpers\AuthToken;
 use App\Helpers\Response;
 
+// this class is used for authorizing the api token send from client
 class AuthKey
 {
     /**

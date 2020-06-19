@@ -5,7 +5,7 @@ namespace App\Models;
 use App\Models\Category;
 use App\Models\Users;
 use Illuminate\Database\Eloquent\Model;
-
+// articles table model with all relationship and mutators
 class Article extends Model
 {
     protected $perPage = 6;
