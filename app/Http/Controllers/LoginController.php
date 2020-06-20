@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Socialite;
 use App\Helpers\Response;
 use App\Models\Users;
 use Exception;
@@ -10,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use App\Http\Requests\LoginRequest;
 use Illuminate\Contracts\Logging\Log;
+use Illuminate\Http\Request;
 // this class is used for login
 class LoginController extends Controller
 {
@@ -43,5 +45,11 @@ class LoginController extends Controller
             $log->error($msg["message"]);
             return response()->json($msg);
         }
+    }
+
+    public function googleAuth(Request $req)
+    {
+        $user = Socialite::driver('google')->userFromToken($req->token);
+        return response()->json(["res" => $user]);
     }
 }

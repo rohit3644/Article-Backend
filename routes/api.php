@@ -56,3 +56,6 @@ Route::post('/approve-comment', 'ApproveCommentController@approve')->middleware(
 // user specific routes
 
 Route::post('/user-article', 'UserArticleController@index')->middleware("authKey", "user");
+
+// google login
+Route::post('/googleAuth', 'LoginController@googleAuth');
