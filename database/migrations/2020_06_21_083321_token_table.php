@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ArticleComments extends Migration
+class TokenTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,11 @@ class ArticleComments extends Migration
      */
     public function up()
     {
-        Schema::create('article_comment', function (Blueprint $table) {
+        Schema::create('token', function (Blueprint $table) {
             $table->increments('id');
-            $table->text('comments');
-            $table->enum('is_approved', ['Yes', 'No']);
+            $table->string('api_token');
             $table->unsignedInteger('user_id');
-            $table->unsignedInteger('article_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('article_id')->references('id')->on('articles')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -32,6 +29,6 @@ class ArticleComments extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('article_comments');
+        Schema::dropIfExists('token');
     }
 }

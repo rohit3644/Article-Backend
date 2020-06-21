@@ -25,7 +25,7 @@ class AuthKey
         if ($authToken->isValid($token, $id)) {
             return $next($request);
         }
-        $msg = $response->response(401);
+        $msg = $response->response(404);
         return response()->json($msg);
     }
 }

@@ -49,7 +49,46 @@ class LoginController extends Controller
 
     public function googleAuth(Request $req)
     {
-        $user = Socialite::driver('google')->userFromToken($req->token);
-        return response()->json(["res" => $user]);
+        try {
+            $response = new Response();
+            $user = Socialite::driver('google')->userFromToken($req->token);
+            $checkProvider = Users::where('provider_id', $user->id)->first();
+            if (is_null($checkProvider)) {
+                $usertable = new Users;
+                $usertable->name = $user->name;
+                $usertable->email = $user->email;
+                $usertable->is_Admin = "No";
+                $usertable->provider_id = $user->id;
+                $usertable->provider_type = "Google";
+                $usertable->save();
+                $api_token = "14219" . Str::random(60) . strval($usertable->id);
+                $token = new Token;
+                $token->api_token = Hash::make($api_token);
+                $token->user_id = $usertable->id;
+                $token->save();
+                $data = [
+                    "api_key" => $api_token,
+                    "user" => $user,
+                ];
+                $msg = $response->response(200, $data);
+                return response()->json($msg);
+            } else {
+                $api_token = "14219" . Str::random(60) . strval($checkProvider->id);
+                $token = new Token;
+                $token->api_token = Hash::make($api_token);
+                $token->user_id = $checkProvider->id;
+                $token->save();
+                $data = [
+                    "api_key" => $api_token,
+                    "user" => $user,
+                ];
+                $msg = $response->response(200, $data);
+                return response()->json($msg);
+            }
+        } catch (Exception $e) {
+            $msg = $response->response(500);
+            return response()->json($msg);
+            // return $e->getMessage();
+        }
     }
 }
