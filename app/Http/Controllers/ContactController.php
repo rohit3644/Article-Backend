@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\ContactRequest;
 use App\Models\Contact;
 use Exception;
-use Illuminate\Contracts\Logging\Log;
+use Illuminate\Support\Facades\Log;
 // this class is used for contact us form
 class ContactController extends Controller
 {
@@ -30,8 +30,7 @@ class ContactController extends Controller
             return response()->json($msg);
         } catch (Exception $e) {
             $msg = $response->response(500);
-            $log = new Log();
-            $log->error($msg["message"]);
+            Log::error($msg["message"]);
             return response()->json($msg);
         }
     }

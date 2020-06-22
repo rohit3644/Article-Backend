@@ -6,6 +6,7 @@ use App\Helpers\Response;
 use App\Http\Requests\OTPRequest;
 use Exception;
 use Twilio\Rest\Client;
+use Illuminate\Support\Facades\Log;
 // this class is used to send otp using twilio
 class OTPSendController extends Controller
 {
@@ -26,6 +27,7 @@ class OTPSendController extends Controller
             return response()->json($msg);
         } catch (Exception $e) {
             $msg = $response->response(500);
+            Log::error($msg['message']);
             return response()->json($msg);
         }
     }

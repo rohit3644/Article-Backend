@@ -13,7 +13,8 @@ use Exception;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ArticleSubmitMail;
 use App\Http\Requests\AddArticleRequest;
-use Illuminate\Contracts\Logging\Log;
+use Illuminate\Support\Facades\Log;
+
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 
@@ -53,18 +54,18 @@ class AddArticleController extends Controller
             ArticleCategory::insert($data);
 
             // mailing the admin
-            $admin = Users::select('email')->where('is_admin', 'Yes')->get();
-            $data = $req;
-            Mail::to($admin[0]->email)->send(new ArticleSubmitMail($data));
+            // $admin = Users::select('email')->where('is_admin', 'Yes')->get();
+            // $data = $req;
+            // Mail::to($admin[0]->email)->send(new ArticleSubmitMail($data));
             // response
             $msg = $response->response(200);
             return response()->json($msg);
         } catch (Exception $e) {
             $msg = $response->response(500);
             // Logging exception
-            $log = new Log();
-            $log->error($msg["message"]);
-            return response()->json($msg);
+            // Log::error($msg["message"]);
+            // return response()->json($msg);
+            return $e->getMessage();
         }
     }
 }

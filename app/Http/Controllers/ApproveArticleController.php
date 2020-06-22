@@ -6,7 +6,7 @@ use App\Helpers\Response;
 use Illuminate\Http\Request;
 use App\Models\Article;
 use Exception;
-use Illuminate\Contracts\Logging\Log;
+use Illuminate\Support\Facades\Log;
 
 // this class is used to approve article
 class ApproveArticleController extends Controller
@@ -22,8 +22,7 @@ class ApproveArticleController extends Controller
             return response()->json($msg);
         } catch (Exception $e) {
             $msg = $response->response(500);
-            $log = new Log();
-            $log->error($msg["message"]);
+            Log::error($msg["message"]);
             return response()->json($msg);
         }
     }

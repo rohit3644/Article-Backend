@@ -6,6 +6,7 @@ use App\Helpers\Response;
 use Exception;
 use Twilio\Rest\Client;
 use App\Http\Requests\OTPVerifyRequest;
+use Illuminate\Support\Facades\Log;
 // this class is used to verify otp using twilio
 class OTPVerifyController extends Controller
 {
@@ -30,6 +31,7 @@ class OTPVerifyController extends Controller
             return response()->json($msg);
         } catch (Exception $e) {
             $msg = $response->response(500);
+            Log::error($msg["message"]);
             return response()->json($msg);
         }
     }

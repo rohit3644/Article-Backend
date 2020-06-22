@@ -10,7 +10,7 @@ use App\Models\ArticleCategory;
 use Exception;
 use App\Helpers\Response;
 use App\Http\Requests\UpdateArticleRequest;
-use Illuminate\Contracts\Logging\Log;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 
@@ -48,8 +48,7 @@ class UpdateArticleController extends Controller
             return response()->json($msg);
         } catch (Exception $e) {
             $msg = $response->response(500);
-            $log = new Log();
-            $log->error($msg["message"]);
+            Log::error($msg["message"]);
             return response()->json($msg);
         }
     }

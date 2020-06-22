@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Article;
 use App\Models\Users;
 use Exception;
-use Illuminate\Contracts\Logging\Log;
+use Illuminate\Support\Facades\Log;
 
 // this class is used to get all the articles
 class AllArticlesController extends Controller
@@ -40,8 +40,7 @@ class AllArticlesController extends Controller
         } catch (Exception $e) {
             $msg = $response->response(500, $articles);
             // logging exception
-            $log = new Log();
-            $log->error($msg["message"]);
+            Log::error($msg["message"]);
             return response()->json($msg);
         }
     }

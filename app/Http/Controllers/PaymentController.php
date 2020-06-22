@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\Response;
 use Exception;
 use App\Http\Requests\PaymentRequest;
+use Illuminate\Support\Facades\Log;
 // this class is used for stripe payment
 class PaymentController extends Controller
 {
@@ -37,6 +38,7 @@ class PaymentController extends Controller
             return response()->json($msg);
         } catch (Exception $e) {
             $msg = $response->response(500);
+            Log::error($msg['message']);
             return response()->json($msg);
         }
     }

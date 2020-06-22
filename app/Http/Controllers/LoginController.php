@@ -10,7 +10,7 @@ use App\Models\Token;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use App\Http\Requests\LoginRequest;
-use Illuminate\Contracts\Logging\Log;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 // this class is used for login
 class LoginController extends Controller
@@ -41,8 +41,7 @@ class LoginController extends Controller
             }
         } catch (Exception $e) {
             $msg = $response->response(500);
-            $log = new Log();
-            $log->error($msg["message"]);
+            Log::error($msg["message"]);
             return response()->json($msg);
         }
     }
@@ -87,6 +86,7 @@ class LoginController extends Controller
             }
         } catch (Exception $e) {
             $msg = $response->response(500);
+            Log::error($msg["message"]);
             return response()->json($msg);
         }
     }

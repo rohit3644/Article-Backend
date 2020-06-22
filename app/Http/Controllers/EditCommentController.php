@@ -6,7 +6,7 @@ use App\Helpers\Response;
 use Exception;
 use App\Models\ArticleComment;
 use App\Http\Requests\EditCommentRequest;
-use Illuminate\Contracts\Logging\Log;
+use Illuminate\Support\Facades\Log;
 // this class is used to edit comments
 class EditCommentController extends Controller
 {
@@ -21,8 +21,7 @@ class EditCommentController extends Controller
             return response()->json($msg);
         } catch (Exception $e) {
             $msg = $response->response(500);
-            $log = new Log();
-            $log->error($msg["message"]);
+            Log::error($msg["message"]);
             return response()->json($msg);
         }
     }

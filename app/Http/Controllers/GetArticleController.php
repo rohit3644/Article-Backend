@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Article;
 use App\Models\Users;
 use Exception;
-use Illuminate\Contracts\Logging\Log;
+use Illuminate\Support\Facades\Log;
 // this class is used to get specific article
 class GetArticleController extends Controller
 {
@@ -33,8 +33,7 @@ class GetArticleController extends Controller
             return response()->json($msg);
         } catch (Exception $e) {
             $msg = $response->response(500, $article);
-            $log = new Log();
-            $log->error($msg["message"]);
+            Log::error($msg["message"]);
             return response()->json($msg);
         }
     }

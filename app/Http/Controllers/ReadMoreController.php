@@ -7,7 +7,7 @@ use App\Models\Users;
 use App\Models\Article;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Contracts\Logging\Log;
+use Illuminate\Support\Facades\Log;
 // this class is used for article details
 class ReadMoreController extends Controller
 {
@@ -44,8 +44,7 @@ class ReadMoreController extends Controller
             return response()->json($msg);
         } catch (Exception $e) {
             $msg = $response->response(500, $userArticle);
-            $log = new Log();
-            $log->error($msg["message"]);
+            Log::error($msg["message"]);
             return response()->json($msg);
         }
     }

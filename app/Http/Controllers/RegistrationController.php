@@ -7,7 +7,7 @@ use App\Models\Users;
 use Exception;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\RegisterRequest;
-use Illuminate\Contracts\Logging\Log;
+use Illuminate\Support\Facades\Log;
 // this class is used for registration
 class RegistrationController extends Controller
 {
@@ -26,8 +26,7 @@ class RegistrationController extends Controller
             return response()->json($msg);
         } catch (Exception $e) {
             $msg = $response->response(200);
-            $log = new Log();
-            $log->error($msg["message"]);
+            Log::error($msg["message"]);
             return response()->json($msg);
         }
     }
