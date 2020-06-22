@@ -18,8 +18,9 @@ class ArticleCategories extends Migration
             $table->unsignedInteger('article_id');
             $table->unsignedInteger('category_id');
             $table->foreign('article_id')->references('id')->on('articles')->onDelete('cascade');
-            $table->foreign('catehory_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->timestamps();
+            $table->engine = 'InnoDB';
         });
     }
 

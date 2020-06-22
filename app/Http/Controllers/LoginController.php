@@ -88,7 +88,6 @@ class LoginController extends Controller
         } catch (Exception $e) {
             $msg = $response->response(500);
             return response()->json($msg);
-            // return $e->getMessage();
         }
     }
 }

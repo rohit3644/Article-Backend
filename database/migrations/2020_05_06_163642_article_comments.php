@@ -19,9 +19,10 @@ class ArticleComments extends Migration
             $table->enum('is_approved', ['Yes', 'No']);
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('article_id');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            // $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('article_id')->references('id')->on('articles')->onDelete('cascade');
             $table->timestamps();
+            $table->engine = 'InnoDB';
         });
     }
 

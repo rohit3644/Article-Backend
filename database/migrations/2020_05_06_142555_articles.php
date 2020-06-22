@@ -21,8 +21,9 @@ class Articles extends Migration
             $table->string('image_name');
             $table->enum('is_approved', ['Yes', 'No']);
             $table->unsignedInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            // $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
+            $table->engine = 'InnoDB';
         });
     }
 
