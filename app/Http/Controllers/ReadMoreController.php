@@ -27,7 +27,7 @@ class ReadMoreController extends Controller
                 return -1;
             }
             $userArticle = Article::find($id);
-            $userArticle->image_name = 'http://ec2-13-233-208-70.ap-south-1.compute.amazonaws.com/upload/images/' . $userArticle->image_name;
+            $userArticle->image_name = public_path('/upload/images/') . $userArticle->image_name;
             $userArticle['category'] = $userArticle->category;
             $userArticle['comments'] = $userArticle->comments;
             $userArticle['articleUser'] = $userArticle->user;
