@@ -19,7 +19,7 @@ class AllArticlesController extends Controller
             $articles =  Article::all();
             foreach ($articles as $article) {
                 // link of the image
-                $article->image_name = asset('/upload/images/' . $article->image_name);
+                $article->image_name = env('ASSET_URL') . '/upload/images/' . $article->image_name;
                 $article['category'] = $article->category;
                 $article['comments'] = $article->comments;
                 $article['articleUser'] = $article->user;

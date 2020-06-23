@@ -16,7 +16,7 @@ class GetArticleController extends Controller
         try {
             $response = new Response();
             $article = Article::find($req->id);
-            $article->image_name = asset('/upload/images/' . $article->image_name);
+            $article->image_name = env('ASSET_URL') . '/upload/images/' . $article->image_name;
             $article['category'] = $article->category;
             $article['comments'] = $article->comments;
             $article['articleUser'] = $article->user;

@@ -18,7 +18,7 @@ class UserArticleController extends Controller
             $articles =  Article::where("user_id", $req->id)->paginate();
 
             foreach ($articles as $article) {
-                $article->image_name = asset('/upload/images/' . $article->image_name);
+                $article->image_name = env('ASSET_URL') . '/upload/images/' . $article->image_name;
                 $article['category'] = $article->category;
                 $article['comments'] = $article->comments;
                 $article['articleUser'] = $article->user;
