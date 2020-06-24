@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Stripe;
+
+use App\Http\Controllers\Controller;
 
 use App\Helpers\Response;
 use Exception;

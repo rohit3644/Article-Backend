@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Twilio;
+
+use App\Http\Controllers\Controller;
 
 use App\Helpers\Response;
 use Exception;

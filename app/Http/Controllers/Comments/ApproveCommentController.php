@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Comments;
+
+use App\Http\Controllers\Controller;
 
 use App\Helpers\Response;
 use Illuminate\Http\Request;
