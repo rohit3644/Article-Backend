@@ -10,7 +10,7 @@ use App\Models\Users;
 use App\Mail\CommentSubmitMail;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\AddCommentRequest;
-use Illuminate\Contracts\Logging\Log;
+use Illuminate\Support\Facades\Log;
 // this class is used to approve article
 class CommentController extends Controller
 {
@@ -58,8 +58,7 @@ class CommentController extends Controller
         } catch (Exception $e) {
             $msg = $response->response(500);
             // log exception
-            $log = new Log();
-            $log->error($msg["message"]);
+            Log::error($msg["message"]);
             return response()->json($msg);
         }
     }
