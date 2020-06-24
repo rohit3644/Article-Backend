@@ -4,23 +4,29 @@ namespace App\Http\Controllers;
 
 use App\Helpers\Response;
 use Illuminate\Http\Request;
-use App\Models\ArticleComment;
+use App\Models\Article;
 use Exception;
 use Illuminate\Support\Facades\Log;
-
-// this class is used to approve comments
-class ApproveCommentController extends Controller
+use Illuminate\Support\Facades\DB;
+// this class is used to approve article
+class ApproveArticleController extends Controller
 {
     public function approve(Request $req)
     {
+        // Begin Transaction
+        DB::beginTransaction();
         try {
             $response = new Response();
-            $comment = ArticleComment::find($req->id);
-            $comment->is_approved = "Yes";
-            $comment->save();
+            $article = Article::find($req->id);
+            $article->is_approved = "Yes";
+            $article->save();
+            // Commit Transaction
+            DB::commit();
             $msg = $response->response(200);
             return response()->json($msg);
         } catch (Exception $e) {
+            // Rollback Transaction
+            DB::rollback();
             $msg = $response->response(500);
             Log::error($e->getMessage());
             return response()->json($msg);

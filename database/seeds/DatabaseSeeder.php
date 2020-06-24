@@ -14,7 +14,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        for ($i = 0; $i < 5; $i++) {
+        for ($i = 0; $i < 15; $i++) {
             DB::table('articles')->insert([
                 'title' => Str::random(10),
                 'content' => Str::random(100),

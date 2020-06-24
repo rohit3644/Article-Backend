@@ -11,11 +11,14 @@ use App\Mail\CommentSubmitMail;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\AddCommentRequest;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 // this class is used to approve article
 class CommentController extends Controller
 {
     public function add(AddCommentRequest $req)
     {
+        // Begin Transaction
+        DB::beginTransaction();
 
         try {
             $response = new Response();
@@ -53,9 +56,14 @@ class CommentController extends Controller
                 Mail::to($req->articleMail)->send(new CommentSubmitMail($data));
             }
 
+            // Commit Transaction
+            DB::commit();
+
             $msg = $response->response(200, $article);
             return response()->json($msg);
         } catch (Exception $e) {
+            // Rollback Transaction
+            DB::rollback();
             $msg = $response->response(500);
             // log exception
             Log::error($e->getMessage());

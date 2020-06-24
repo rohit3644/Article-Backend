@@ -10,11 +10,14 @@ use App\Http\Requests\ContactRequest;
 use App\Models\Contact;
 use Exception;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 // this class is used for contact us form
 class ContactController extends Controller
 {
     public function contact(ContactRequest $req)
     {
+        // Begin Transaction
+        DB::beginTransaction();
         try {
             // mail the team
             $response = new Response();
@@ -26,9 +29,13 @@ class ContactController extends Controller
             $contact->email = $req->email;
             $contact->message = $req->message;
             $contact->save();
+            // Commit Transaction
+            DB::commit();
             $msg = $response->response(200);
             return response()->json($msg);
         } catch (Exception $e) {
+            // Rollback Transaction
+            DB::rollback();
             $msg = $response->response(500);
             Log::error($e->getMessage());
             return response()->json($msg);

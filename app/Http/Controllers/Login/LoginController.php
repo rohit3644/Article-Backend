@@ -12,11 +12,14 @@ use Illuminate\Support\Str;
 use App\Http\Requests\LoginRequest;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 // this class is used for login
 class LoginController extends Controller
 {
     public function login(LoginRequest $req)
     {
+        // Begin Transaction
+        DB::beginTransaction();
         try {
             $response = new Response();
             $user = Users::where('email', $req->email)->get();
@@ -33,13 +36,19 @@ class LoginController extends Controller
                     "api_key" => $api_token,
                     "user" => $user[0],
                 ];
+                // Commit Transaction
+                DB::commit();
                 $msg = $response->response(200, $data);
                 return response()->json($msg);
             } else {
+                // Rollback Transaction
+                DB::rollback();
                 $msg = $response->response(422);
                 return response()->json($msg);
             }
         } catch (Exception $e) {
+            // Rollback Transaction
+            DB::rollback();
             $msg = $response->response(500);
             Log::error($e->getMessage());
             return response()->json($msg);
@@ -48,6 +57,8 @@ class LoginController extends Controller
 
     public function googleAuth(Request $req)
     {
+        // Begin Transaction
+        DB::beginTransaction();
         try {
             $response = new Response();
             $user = Socialite::driver('google')->userFromToken($req->token);
@@ -69,6 +80,8 @@ class LoginController extends Controller
                     "api_key" => $api_token,
                     "user" => $user,
                 ];
+                // Commit Transaction
+                DB::commit();
                 $msg = $response->response(200, $data);
                 return response()->json($msg);
             } else {
@@ -81,10 +94,14 @@ class LoginController extends Controller
                     "api_key" => $api_token,
                     "user" => $user,
                 ];
+                // Commit Transaction
+                DB::commit();
                 $msg = $response->response(200, $data);
                 return response()->json($msg);
             }
         } catch (Exception $e) {
+            // Rollback Transaction
+            DB::rollback();
             $msg = $response->response(500);
             Log::error($e->getMessage());
             return response()->json($msg);

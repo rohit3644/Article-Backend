@@ -8,16 +8,17 @@ use App\Models\Article;
 use App\Models\Users;
 use Exception;
 use Illuminate\Support\Facades\Log;
-// this class is used to get user specific articles
-class UserArticleController extends Controller
+
+// this class is used to get all the articles
+class AllArticlesController extends Controller
 {
-    public function index(Request $req)
+    public function get(Request $req)
     {
         try {
             $response = new Response();
-            $articles =  Article::where("user_id", $req->id)->paginate();
-
+            $articles =  Article::select('id', 'title', 'content', 'author_name', 'image_name', 'is_approved', 'user_id')->get();
             foreach ($articles as $article) {
+                // link of the image
                 $article->image_name = env('ASSET_URL') . '/upload/images/' . $article->image_name;
                 $article['category'] = $article->category;
                 $article['comments'] = $article->comments;
@@ -25,6 +26,7 @@ class UserArticleController extends Controller
             }
             foreach ($articles as $article) {
                 foreach ($article->comments as $comments) {
+                    // check is user is guest or a registered user
                     if (is_null($comments->user_id)) {
                         $comments["user"] = "Guest";
                     } else {
@@ -37,6 +39,7 @@ class UserArticleController extends Controller
             return response()->json($msg);
         } catch (Exception $e) {
             $msg = $response->response(500, $articles);
+            // logging exception
             Log::error($e->getMessage());
             return response()->json($msg);
         }
