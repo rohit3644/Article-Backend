@@ -33,7 +33,7 @@ class GetArticleController extends Controller
             return response()->json($msg);
         } catch (Exception $e) {
             $msg = $response->response(500, $article);
-            Log::error($msg["message"]);
+            Log::error($e->getMessage());
             return response()->json($msg);
         }
     }

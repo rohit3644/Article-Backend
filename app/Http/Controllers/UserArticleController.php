@@ -37,7 +37,7 @@ class UserArticleController extends Controller
             return response()->json($msg);
         } catch (Exception $e) {
             $msg = $response->response(500, $articles);
-            Log::error($msg["message"]);
+            Log::error($e->getMessage());
             return response()->json($msg);
         }
     }

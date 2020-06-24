@@ -63,7 +63,7 @@ class AddArticleController extends Controller
         } catch (Exception $e) {
             $msg = $response->response(500);
             // Logging exception
-            Log::error($msg["message"]);
+            Log::error($e->getMessage());
             return response()->json($msg);
         }
     }
