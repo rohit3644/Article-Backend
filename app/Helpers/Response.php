@@ -2,8 +2,11 @@
 
 namespace App\Helpers;
 
+// this class is used to generate the response based on the status code
+// and data provided from the controller
 class Response
-{
+{   // this function has some harcoded status code and corresponding 
+    // error message and is used to generate the reponse
     public function response($code, $data = null)
     {
         $responses = [

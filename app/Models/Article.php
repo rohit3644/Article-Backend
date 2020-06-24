@@ -5,7 +5,8 @@ namespace App\Models;
 use App\Models\Category;
 use App\Models\Users;
 use Illuminate\Database\Eloquent\Model;
-// articles table model with all relationship and mutators
+// articles table model with all relationship to different tables
+// and mutators for filtering the data before storing in database
 class Article extends Model
 {
     protected $perPage = 6;

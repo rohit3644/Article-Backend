@@ -42,6 +42,9 @@ Route::post('/add-comment', 'Comments\CommentController@add');
 // contact us
 Route::post('/contact', 'Contact\ContactController@contact');
 
+// google login
+Route::post('/googleAuth', 'Login\LoginController@googleAuth');
+
 
 // admin specific routes
 
@@ -53,9 +56,7 @@ Route::post('/delete-comment', 'Comments\DeleteCommentController@delete')->middl
 
 Route::post('/approve-comment', 'Comments\ApproveCommentController@approve')->middleware("authKey", "admin");
 
+
 // user specific routes
 
 Route::post('/user-article', 'Articles\UserArticleController@index')->middleware("authKey", "user");
-
-// google login
-Route::post('/googleAuth', 'Login\LoginController@googleAuth');

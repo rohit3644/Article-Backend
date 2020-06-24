@@ -15,9 +15,11 @@ use App\Http\Requests\LoginRequest;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-// this class is used for login
+// this class is used for app login authentication, 
+// api token generation and google login using Socialite
 class LoginController extends Controller
 {
+    // this function is used for app login
     public function login(LoginRequest $req)
     {
         // Begin Transaction
@@ -30,6 +32,7 @@ class LoginController extends Controller
                 $api_token = $user[0]->is_admin === "Yes"
                     ? "78357" . Str::random(60) . strval($user[0]->id) :
                     "14219" . Str::random(60) . strval($user[0]->id);
+                // Hashing and storing the token
                 $token = new Token;
                 $token->api_token = Hash::make($api_token);
                 $token->user_id = $user[0]->id;
@@ -57,14 +60,18 @@ class LoginController extends Controller
         }
     }
 
+    // this function is used Google Login using Socialite
     public function googleAuth(Request $req)
     {
         // Begin Transaction
         DB::beginTransaction();
         try {
             $response = new Response();
+            // verify token with Socialite driver
             $user = Socialite::driver('google')->userFromToken($req->token);
+            // check if user already exists
             $checkProvider = Users::where('provider_id', $user->id)->first();
+            // add to the DB if new User
             if (is_null($checkProvider)) {
                 $usertable = new Users;
                 $usertable->name = $user->name;
@@ -86,7 +93,9 @@ class LoginController extends Controller
                 DB::commit();
                 $msg = $response->response(200, $data);
                 return response()->json($msg);
-            } else {
+            }
+            // else if existing user then generate token and proceed
+            else {
                 $api_token = "14219" . Str::random(60) . strval($checkProvider->id);
                 $token = new Token;
                 $token->api_token = Hash::make($api_token);

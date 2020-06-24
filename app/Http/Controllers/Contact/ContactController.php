@@ -13,7 +13,8 @@ use App\Models\Contact;
 use Exception;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
-// this class is used for contact us form
+// this class is used for mailing the contact us message to the team
+// and store the name, email and message in the the DB
 class ContactController extends Controller
 {
     public function contact(ContactRequest $req)
@@ -25,7 +26,7 @@ class ContactController extends Controller
             $response = new Response();
             $data = $req;
             Mail::to('test@test.com')->send(new ContactFormMail($data));
-
+            // store the data in DB
             $contact = new Contact;
             $contact->name = $req->name;
             $contact->email = $req->email;

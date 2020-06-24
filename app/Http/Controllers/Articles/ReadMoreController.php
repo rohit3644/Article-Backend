@@ -10,7 +10,7 @@ use App\Models\Article;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-// this class is used for article details
+// this class is used to get details of the requested article
 class ReadMoreController extends Controller
 {
     public function getId(Request $req)
@@ -25,15 +25,19 @@ class ReadMoreController extends Controller
                     $id = $article->id;
                 }
             }
+            // if no match
             if ($id === -1) {
                 return -1;
             }
             $userArticle = Article::find($id);
+            // get the image link, category,comments and Author
             $userArticle->image_name = env('ASSET_URL') . '/upload/images/' . $userArticle->image_name;
             $userArticle['category'] = $userArticle->category;
             $userArticle['comments'] = $userArticle->comments;
             $userArticle['articleUser'] = $userArticle->user;
 
+            // check if the user_id is null then it is a Guest user
+            // else get the user data from DB
             foreach ($userArticle->comments as $comments) {
                 if (is_null($comments->user_id)) {
                     $comments["user"] = "Guest";

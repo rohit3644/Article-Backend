@@ -8,13 +8,14 @@ use App\Helpers\Response;
 use Exception;
 use App\Http\Requests\PaymentRequest;
 use Illuminate\Support\Facades\Log;
-// this class is used for stripe payment
+// this class is used for testing stripe payment
 class PaymentController extends Controller
 {
     public function payment(PaymentRequest $req)
     {
         try {
             $response = new Response();
+            // get secret key from the env
             \Stripe\Stripe::setApiKey(getenv('STRIPE_SECRET_KEY'));
             $token = $req->tokenId;
             // create customer

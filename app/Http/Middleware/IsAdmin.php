@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use App\Helpers\Response;
 use Closure;
 
-// restricting access to admin only
+// this class checks if the request is send by admin only
 class IsAdmin
 {
     /**
@@ -15,6 +15,8 @@ class IsAdmin
      * @param  \Closure  $next
      * @return mixed
      */
+
+    // this function checks if request has isAdmin and if isAdmin === "Yes"
     public function handle($request, Closure $next)
     {
         $response = new Response();

@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
                 'title' => Str::random(10),
                 'content' => Str::random(100),
                 'author_name' => Str::random(10),
-                'image_name' => '1592416673.jpeg',
+                'image_name' => '1592910524.jpeg',
                 'is_approved' => "No",
             ]);
         }

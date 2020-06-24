@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\AddCommentRequest;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
-// this class is used to approve article
+// this class is used to add the comment to a article and
 class CommentController extends Controller
 {
     public function add(AddCommentRequest $req)
@@ -39,6 +39,7 @@ class CommentController extends Controller
             $comments->save();
             $article =  Article::find($req->articleId);
             $article['comments'] = $article->comments;
+            // check if the commented user is a guest or a registered user
             foreach ($article->comments as $comments) {
                 if (is_null($comments->user_id)) {
                     $comments["user"] = "Guest";

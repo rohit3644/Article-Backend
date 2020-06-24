@@ -10,9 +10,10 @@ use App\Models\Article;
 use Exception;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
-// this class is used to approve article
+// this class is used to approve article by Admin
 class ApproveArticleController extends Controller
 {
+    // this function is used to approve article by Admin
     public function approve(Request $req)
     {
         // Begin Transaction

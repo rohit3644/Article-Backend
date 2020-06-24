@@ -6,7 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-// Mail admin on article submit
+// this class is used to Mail admin on article submit
 class ArticleSubmitMail extends Mailable
 {
     use Queueable, SerializesModels;

@@ -16,6 +16,9 @@ class AuthKey
      * @param  \Closure  $next
      * @return mixed
      */
+    // this function gets the token from the header and
+    // passes it to the isValid function of AuthToken helper class to authorize
+    // the token, either true or false is returned 
     public function handle($request, Closure $next)
     {
         $response = new Response();

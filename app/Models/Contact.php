@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-// contacts table with the mutators
+// contacts table with the mutators for filtering the data
 class Contact extends Model
 {
     public function setNameAttribute($value)

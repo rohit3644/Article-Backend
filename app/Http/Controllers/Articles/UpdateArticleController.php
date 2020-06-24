@@ -16,7 +16,8 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\DB;
-// this class is used to update an article
+// this class is used to update an article details like title,
+// content, authorName, image and category
 class UpdateArticleController extends Controller
 {
     public function update(UpdateArticleRequest $req)

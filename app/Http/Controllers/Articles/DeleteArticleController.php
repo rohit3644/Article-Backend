@@ -11,7 +11,8 @@ use Exception;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
-// this class is used to delete articles
+// this class is used to delete articles and the image files
+// associated with the articles
 class DeleteArticleController extends Controller
 {
     public function delete(Request $req)

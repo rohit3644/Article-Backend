@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\RegisterRequest;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
-// this class is used for registration
+// this class is used for registration of new Users through app
 class RegistrationController extends Controller
 {
     public function register(RegisterRequest $req)

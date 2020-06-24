@@ -10,7 +10,7 @@ use App\Models\ArticleComment;
 use Exception;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
-// this class is used to approve comments
+// this class is used to approve comments of the user by admin only
 class ApproveCommentController extends Controller
 {
     public function approve(Request $req)

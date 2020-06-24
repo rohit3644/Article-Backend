@@ -4,9 +4,12 @@ namespace App\Helpers;
 
 use App\Models\Token;
 use Illuminate\Support\Facades\Hash;
-
+// this class is used to authorize the client api token
+// using the server api token
 class AuthToken
 {
+    // this functions return true is api token exists in DB
+    // else returns false
     public function isValid($reqToken, $id)
     {
 

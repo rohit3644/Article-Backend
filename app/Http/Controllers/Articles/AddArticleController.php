@@ -19,10 +19,13 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 
-// this class is used to add article
+// this class is used to add article, handle image naming and storing
+// sending mail to the admin
 
 class AddArticleController extends Controller
 {
+    // this function is used to add article, handle image naming and storing
+    // sending mail to the admin
     public function addArticle(AddArticleRequest $req)
     {
         // Begin Transaction

@@ -11,14 +11,19 @@ use App\Models\Users;
 use Exception;
 use Illuminate\Support\Facades\Log;
 
-// this class is used to get all the articles
+// this class is used to get all the articles, get the url for the images
+// and getting category, comments and Author of article through Eloquent Relationship
 class AllArticlesController extends Controller
 {
+    // this function is used to get all the articles, get the url for the images
+    // and getting category, comments and Author of article through Eloquent Relationship
     public function get(Request $req)
     {
         try {
             $response = new Response();
             $articles =  Article::select('id', 'title', 'content', 'author_name', 'image_name', 'is_approved', 'user_id')->get();
+            // iterate through all the articles in paginated data
+            // and get the image link, category,comments and Author
             foreach ($articles as $article) {
                 // link of the image
                 $article->image_name = env('ASSET_URL') . '/upload/images/' . $article->image_name;
@@ -26,6 +31,8 @@ class AllArticlesController extends Controller
                 $article['comments'] = $article->comments;
                 $article['articleUser'] = $article->user;
             }
+            // check if the user_id is null then it is a Guest user
+            // else get the user data from DB
             foreach ($articles as $article) {
                 foreach ($article->comments as $comments) {
                     // check is user is guest or a registered user
