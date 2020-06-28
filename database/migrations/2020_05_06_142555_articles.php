@@ -20,7 +20,7 @@ class Articles extends Migration
             $table->string('author_name', 30);
             $table->string('image_name', 15);
             $table->enum('is_approved', ['Yes', 'No']);
-            $table->unsignedInteger('user_id');
+            $table->unsignedInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
             $table->engine = 'InnoDB';

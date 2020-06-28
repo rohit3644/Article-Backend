@@ -18,7 +18,7 @@ class UsersTable extends Migration
             $table->string('name', 30);
             $table->string('email', 30)->unique();
             $table->string('password', 100)->nullable();
-            $table->string('mobile_no', 30)->unique()->nullable();
+            $table->string('mobile_no', 30)->nullable();
             $table->enum('is_admin', ['Yes', 'No']);
             $table->string('provider_id', 50)->nullable();
             $table->string('provider_type', 20)->nullable();

@@ -17,7 +17,7 @@ class ArticleComments extends Migration
             $table->increments('id');
             $table->text('comments');
             $table->enum('is_approved', ['Yes', 'No']);
-            $table->unsignedInteger('user_id');
+            $table->unsignedInteger('user_id')->nullable();
             $table->unsignedInteger('article_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('article_id')->references('id')->on('articles')->onDelete('cascade');
