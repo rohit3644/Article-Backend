@@ -11,6 +11,9 @@ Route::group(['middleware' => ['authKey']], function () {
     // get the article data to prepopulate update field
     Route::post('/get-article', 'Articles\ArticleController@getSpecific');
 
+    // all articles for admin screen
+    Route::get('/all-articles', 'Articles\ArticleController@get');
+
     // admin specific routes
     Route::group(['middleware' => ['admin']], function () {
 
@@ -44,9 +47,6 @@ Route::post('/login', 'Login\LoginController@login');
 
 // readmore article
 Route::post('/read-more', 'Articles\ArticleController@getId');
-
-// all articles for admin screen
-Route::get('/all-articles', 'Articles\ArticleController@get');
 
 // stripe payment
 Route::post('/payment', 'Stripe\PaymentController@payment');
