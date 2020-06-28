@@ -24,8 +24,8 @@ class OTPVerifyRequest extends FormRequest
     public function rules()
     {
         return [
-            "mobile" => "required",
-            "otp" => "required",
+            'mobile' => 'required',
+            'otp' => 'required',
         ];
     }
 }

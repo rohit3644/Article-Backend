@@ -24,7 +24,7 @@ class OTPRequest extends FormRequest
     public function rules()
     {
         return [
-            "mobile" => "required",
+            'mobile' => 'required',
         ];
     }
 }

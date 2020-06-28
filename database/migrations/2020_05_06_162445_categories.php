@@ -15,7 +15,7 @@ class Categories extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('category');
+            $table->string('category', 50);
             $table->timestamps();
             $table->engine = 'InnoDB';
         });

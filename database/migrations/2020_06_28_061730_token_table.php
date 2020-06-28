@@ -15,7 +15,8 @@ class TokenTable extends Migration
     {
         Schema::create('token', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('api_token');
+            $table->string('api_token', 70)->unique();
+            $table->enum('is_active', ['Yes', 'No']);
             $table->unsignedInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();

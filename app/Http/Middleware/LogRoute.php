@@ -22,7 +22,7 @@ class LogRoute
     public function handle($request, Closure $next)
     {
         $response = $next($request);
-        if (app()->environment("local")) {
+        if (app()->environment('local')) {
             $log = [
                 'URI' => $request->getUri(),
                 'METHOD' => $request->getMethod(),

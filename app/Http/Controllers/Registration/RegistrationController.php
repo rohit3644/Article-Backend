@@ -25,7 +25,7 @@ class RegistrationController extends Controller
             $user->email = $req->email;
             $user->password = Hash::make($req->password);
             $user->mobile_no = $req->mobile;
-            $user->is_admin = "No";
+            $user->is_admin = 'No';
             $user->save();
             // Commit Transaction
             DB::commit();

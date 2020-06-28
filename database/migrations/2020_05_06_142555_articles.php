@@ -15,13 +15,13 @@ class Articles extends Migration
     {
         Schema::create('articles', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('title');
+            $table->string('title', 30);
             $table->text('content');
-            $table->string('author_name');
-            $table->string('image_name');
+            $table->string('author_name', 30);
+            $table->string('image_name', 15);
             $table->enum('is_approved', ['Yes', 'No']);
             $table->unsignedInteger('user_id');
-            // $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
             $table->engine = 'InnoDB';
         });

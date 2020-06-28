@@ -45,6 +45,14 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\LogRoute::class,
         ],
 
+        'authKey' => [
+            \App\Http\Middleware\AuthKey::class,
+        ],
+
+        'admin' => [
+            \App\Http\Middleware\IsAdmin::class
+        ],
+
     ];
 
     /**
@@ -61,8 +69,6 @@ class Kernel extends HttpKernel
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        'authKey' => \App\Http\Middleware\AuthKey::class,
         'user' => \App\Http\Middleware\IsUser::class,
-        'admin' => \App\Http\Middleware\IsAdmin::class,
     ];
 }

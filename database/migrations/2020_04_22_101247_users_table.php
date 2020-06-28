@@ -15,13 +15,13 @@ class UsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->string('password')->nullable();
-            $table->string('mobile_no', 30)->nullable();
+            $table->string('name', 30);
+            $table->string('email', 30)->unique();
+            $table->string('password', 100)->nullable();
+            $table->string('mobile_no', 30)->unique()->nullable();
             $table->enum('is_admin', ['Yes', 'No']);
-            $table->string('provider_id')->nullable();
-            $table->string('provider_type')->nullable();
+            $table->string('provider_id', 50)->nullable();
+            $table->string('provider_type', 20)->nullable();
             $table->timestamps();
             $table->engine = 'InnoDB';
         });

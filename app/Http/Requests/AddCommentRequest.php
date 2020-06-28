@@ -24,7 +24,7 @@ class AddCommentRequest extends FormRequest
     public function rules()
     {
         return [
-            "comment" => 'required',
+            'comment' => 'required',
         ];
     }
 }

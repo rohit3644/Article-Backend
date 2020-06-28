@@ -15,11 +15,11 @@ class IsUser
      * @param  \Closure  $next
      * @return mixed
      */
-    // this function checks if request has isAdmin and if isAdmin === "No"
+    // this function checks if request has isAdmin and if isAdmin === 'No'
     public function handle($request, Closure $next)
     {
         $response = new Response();
-        if ($request->isAdmin && $request->isAdmin === "No") {
+        if ($request->isAdmin && $request->isAdmin === 'No') {
 
             return $next($request);
         }

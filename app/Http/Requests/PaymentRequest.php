@@ -24,11 +24,11 @@ class PaymentRequest extends FormRequest
     public function rules()
     {
         return [
-            "line" => "required",
-            "postalCode" => "required",
-            "city" => "required",
-            "state" => "required",
-            "country" => "required",
+            'line' => 'required',
+            'postalCode' => 'required',
+            'city' => 'required',
+            'state' => 'required',
+            'country' => 'required',
         ];
     }
 }
