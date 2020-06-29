@@ -14,7 +14,7 @@ class AuthToken
 
         $token = Token::where('user_id', $id)
             ->where('api_token', $reqToken)
-            ->where('is_active', "Yes")->get();
+            ->where('is_active', "Yes")->first();
         if (!is_null($token)) {
             return true;
         }
