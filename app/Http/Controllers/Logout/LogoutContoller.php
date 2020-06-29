@@ -21,7 +21,7 @@ class LogoutController extends Controller
             $id = intval(substr($req->apiToken, 65));
             $token = Token::where('user_id', $id)
                 ->where('api_token', $req->apiToken)
-                ->where('is_active', "Yes")->get();
+                ->where('is_active', "Yes")->first();
             $token->is_active = "No";
             $token->save();
             // Commit Transaction
