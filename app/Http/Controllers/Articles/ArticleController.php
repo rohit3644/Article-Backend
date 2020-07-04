@@ -38,15 +38,14 @@ class ArticleController extends Controller
             $users = Users::paginate();
             // iterate through all the articles in paginated data
             // and get the image link, category,comments and Author
+            // check if the user_id is null then it is a Guest user
+            // else get the user data from DB
             foreach ($articles as $article) {
                 $article->image_name = env('ASSET_URL') . '/upload/images/' . $article->image_name;
                 $article['category'] = $article->category;
                 $article['comments'] = $article->comments;
                 $article['articleUser'] = $article->user;
-            }
-            // check if the user_id is null then it is a Guest user
-            // else get the user data from DB
-            foreach ($articles as $article) {
+
                 foreach ($article->comments as $comments) {
                     if (is_null($comments->user_id)) {
                         $comments['user'] = 'Guest';
@@ -56,6 +55,7 @@ class ArticleController extends Controller
                     }
                 }
             }
+
             $data = [
                 'articles' => $articles,
                 'users' => $users,
@@ -133,16 +133,15 @@ class ArticleController extends Controller
             $articles =  Article::select('id', 'title', 'content', 'author_name', 'image_name', 'is_approved', 'user_id')->get();
             // iterate through all the articles in paginated data
             // and get the image link, category,comments and Author
+            // check if the user_id is null then it is a Guest user
+            // else get the user data from DB
             foreach ($articles as $article) {
                 // link of the image
                 $article->image_name = env('ASSET_URL') . '/upload/images/' . $article->image_name;
                 $article['category'] = $article->category;
                 $article['comments'] = $article->comments;
                 $article['articleUser'] = $article->user;
-            }
-            // check if the user_id is null then it is a Guest user
-            // else get the user data from DB
-            foreach ($articles as $article) {
+
                 foreach ($article->comments as $comments) {
                     // check is user is guest or a registered user
                     if (is_null($comments->user_id)) {
@@ -334,15 +333,13 @@ class ArticleController extends Controller
             $articles =  Article::where('user_id', $req->id)->paginate();
 
             // get the image link, category,comments and Author
+            // check if the user_id is null then it is a Guest user
+            // else get the user data from DB
             foreach ($articles as $article) {
                 $article->image_name = env('ASSET_URL') . '/upload/images/' . $article->image_name;
                 $article['category'] = $article->category;
                 $article['comments'] = $article->comments;
                 $article['articleUser'] = $article->user;
-            }
-            // check if the user_id is null then it is a Guest user
-            // else get the user data from DB
-            foreach ($articles as $article) {
                 foreach ($article->comments as $comments) {
                     if (is_null($comments->user_id)) {
                         $comments['user'] = 'Guest';
