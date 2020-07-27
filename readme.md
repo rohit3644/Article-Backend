@@ -25,14 +25,14 @@ Step 4: Move to your project folder
 
 Step 5: Type `composer install` and `composer dump-autoload` to install and refresh all the dependencies
 
-Step 4: Create an .env file `touch .env`.
+Step 6: Create an .env file `touch .env`.
 
-Step 5: Copy the content of .env.example file to .env file.
+Step 7: Copy the content of .env.example file to .env file.
 
-STep 6: Type `php artisan key:generate && php artisan cache:clear && php artisan config:clear && composer dump-autoload`.
+STep 8: Type `php artisan key:generate && php artisan cache:clear && php artisan config:clear && composer dump-autoload`.
 
-Step 7: Type `php artisan migrate` to add migration in MYSQL
+Step 9: Type `php artisan migrate` to add migration in MYSQL
 
-Step 8: Type `chmod 777 -R storage bootstrap/cache public/uploads` to give permissions for image upload and logging exception
+Step 10: Type `chmod 777 -R storage bootstrap/cache public/uploads` to give permissions for image upload and logging exception
 
-Step 9: Lastly, type `php artisan serve` to start local development server`
+Step 11: Lastly, type `php artisan serve` to start local development server`
